@@ -1,0 +1,39 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ABAI" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/lightBlue</item>'
+
+        <item name="android:colorBackground">@color/creamyYellow</item>
+    </style>
+
+    <style name="Theme.ABAI" parent="Base.Theme.ABAI" />
+
+    <style name="temaBackground">
+        <item name="android:background">#FFF4D1</item>
+    </style>
+
+    <style name="TextHeading1">
+        <item name="android:textSize">34sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextHeading2">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TextButton">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="appBar">
+        <item name="android:backgroundTint">#B3E5FC</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize50" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+</resources>
