@@ -15,5 +15,8 @@
     <string name="register_subtitle">Daftar untuk menggunakkan aplikasi</string>
     <string name="register_term_and_condition">Saya setuju dengan syarat dan ketentuan</string>
     <string name="already_have_account">Sudah punya akun?</string>
+    <string name="lets_read">Mari Membaca</string>
+    <string name="data_invalid">Mari Membaca</string>
+
 
 </resources>

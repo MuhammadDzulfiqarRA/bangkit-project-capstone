@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
         //binding
         binding.btnLogin.setOnClickListener {
             if (binding.edLoginUsername.text != null && binding.edLoginPassword.text != null) {
-
+                startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
             } else{
                 Toast.makeText(
                     this@LoginActivity,

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dicoding.abai.adapter.StoryAdapter.MyViewHolder.Companion.DIFF_CALLBACK
 import com.dicoding.abai.databinding.ItemRvBinding
+import com.dicoding.abai.helper.ConstantsObject
 import com.dicoding.abai.response.ItemsItem
 import com.dicoding.abai.ui.activity.DetailStoryActivity
 
@@ -30,7 +31,7 @@ class StoryAdapter : ListAdapter<ItemsItem, StoryAdapter.MyViewHolder>(DIFF_CALL
         holder.bind(dataItem)
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailStoryActivity::class.java)
-            intent.putExtra("title", dataItem.login)
+            intent.putExtra(ConstantsObject.DASHBOARD_TO_DETAIL, dataItem)
             holder.itemView.context.startActivity(intent)
         }
     }
