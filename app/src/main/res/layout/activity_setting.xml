@@ -56,13 +56,15 @@
     <TextView
         android:id="@+id/user_text_setting"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:text="Akun"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/next_arrow1"
         app:layout_constraintStart_toEndOf="@+id/user_icon"
-        android:text="Akun" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/next_arrow1"
@@ -86,7 +88,7 @@
     <ImageView
         android:id="@+id/info_icon"
         android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
         android:scaleType="centerCrop"
         android:background="@drawable/info_icon"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -95,13 +97,15 @@
     <TextView
         android:id="@+id/detail_about_us"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:text="Tentang Kami"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/next_arrow"
         app:layout_constraintStart_toEndOf="@+id/info_icon"
-        android:text="Tentang Kami" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/next_arrow"

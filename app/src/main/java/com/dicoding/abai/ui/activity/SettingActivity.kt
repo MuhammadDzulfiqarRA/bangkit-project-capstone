@@ -1,5 +1,6 @@
 package com.dicoding.abai.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.abai.databinding.ActivitySettingBinding
@@ -16,5 +17,8 @@ class SettingActivity : AppCompatActivity() {
 //        val action = supportActionBar
 //        action!!.title = "Pengaturan"
 
+        binding.firstLine.setOnClickListener {
+            startActivity(Intent(this@SettingActivity, AccountActivity::class.java))
+        }
     }
 }

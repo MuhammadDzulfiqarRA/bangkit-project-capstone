@@ -10,10 +10,18 @@ import androidx.core.view.WindowInsetsCompat
 import com.dicoding.abai.R
 import com.dicoding.abai.databinding.ActivityDashboardBinding
 import com.dicoding.abai.databinding.ActivityLoginBinding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private val RC_SIGN_IN = 9001
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -36,6 +44,42 @@ class LoginActivity : AppCompatActivity() {
 
         binding.tvRegister.setOnClickListener {
             startActivity(Intent(this@LoginActivity,RegisterActivity::class.java))
+        }
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .requestIdToken(R.string.client_id.toString())
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        binding.btnGoogle.setOnClickListener {
+            signIn()
+        }
+    }
+
+    private fun signIn() {
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        }
+    }
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account = completedTask.getResult(ApiException::class.java)
+            // Signed in successfully
+            // You can now use account.idToken to authenticate with your backend
+        } catch (e: ApiException) {
+            // Handle error
         }
     }
 }

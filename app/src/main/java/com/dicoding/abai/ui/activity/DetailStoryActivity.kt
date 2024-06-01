@@ -1,5 +1,6 @@
 package com.dicoding.abai.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +30,10 @@ class DetailStoryActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, getString(R.string.data_invalid), Toast.LENGTH_SHORT).show()
             finish()
+        }
+
+        binding.btnLetsReading.setOnClickListener {
+            startActivity(Intent(this@DetailStoryActivity, ReadingActivity::class.java))
         }
 
     }

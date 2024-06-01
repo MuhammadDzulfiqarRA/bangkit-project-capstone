@@ -49,6 +49,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     //Implement dari API dummy GithubUser
 
+    implementation ("com.google.android.gms:play-services-auth:19.2.0")
 
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.google.android.material:material:1.4.0")

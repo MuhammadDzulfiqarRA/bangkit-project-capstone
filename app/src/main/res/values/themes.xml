@@ -12,6 +12,7 @@
     <style name="cardView">
         <item name="android:background">@color/creamyYellow</item>
         <item name="colorPrimary">@color/lightBlue</item>
+        <item name="backgroundTint">@color/creamyYellow</item>
 
     </style>
 
