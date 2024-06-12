@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "596878695317",
+    "project_id": "aba-i-3a3d1",
+    "storage_bucket": "aba-i-3a3d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596878695317:android:be3a55965e9004e3ba749c",
+        "android_client_info": {
+          "package_name": "com.dicoding.abai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "596878695317-ser36966m4v9plfuhmkmjc1vgepk3out.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dicoding.abai",
+            "certificate_hash": "781736ebb8eb390b7a82a46e64cbe217d2c503ca"
+          }
+        },
+        {
+          "client_id": "596878695317-so3gpn5o3se56kreoeva9in68bgmohd7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpFuUeKXIpVMynh6oHjqWSnmvfexp5QU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "596878695317-so3gpn5o3se56kreoeva9in68bgmohd7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

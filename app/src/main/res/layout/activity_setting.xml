@@ -32,89 +32,159 @@
       android:background="@color/lightBlue"
       app:popupTheme="@color/white"
       app:title="Pengaturan"
-      app:titleMarginStart="150dp"
       tools:ignore="MissingConstraints" />
 
   <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:padding="8dp"
       android:orientation="horizontal"
+      android:padding="12dp"
       app:layout_constraintTop_toBottomOf="@id/toolbar"
       tools:ignore="MissingConstraints"
-      android:id="@+id/first_line">
+      android:id="@+id/user_account_line">
 
     <ImageView
         android:id="@+id/user_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+
+        android:background="@drawable/ic_account"
         android:scaleType="centerCrop"
-        android:background="@drawable/user_icon"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/user_text_setting"
+        android:id="@+id/tv_user_account"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Akun"
+        android:text="Akun Saya"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/next_arrow1"
+        app:layout_constraintEnd_toStartOf="@+id/account_arrow"
         app:layout_constraintStart_toEndOf="@+id/user_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/next_arrow1"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:id="@+id/account_arrow"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/ic_arrow"
         android:scaleType="centerCrop"
-        android:background="@drawable/arrow_next"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <!-- Divider -->
+  <View
+      android:id="@+id/divider1"
+      android:layout_width="0dp"
+      android:layout_height="1dp"
+      android:background="@android:color/darker_gray"
+      app:layout_constraintTop_toBottomOf="@id/user_account_line"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
 
   <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:padding="8dp"
       android:orientation="horizontal"
-      app:layout_constraintTop_toBottomOf="@id/first_line"
+      android:padding="12dp"
+      app:layout_constraintTop_toBottomOf="@id/divider1"
       tools:ignore="MissingConstraints"
-      android:id="@+id/second_line">
+      android:id="@+id/about_us_line">
 
     <ImageView
-        android:id="@+id/info_icon"
-        android:layout_width="50dp"
-        android:layout_height="0dp"
+        android:id="@+id/about_us_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_about_us"
         android:scaleType="centerCrop"
-        android:background="@drawable/info_icon"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_about_us"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Tentang Kami"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/about_us_arrow"
+        app:layout_constraintStart_toEndOf="@+id/about_us_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/about_us_arrow"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:scaleType="centerCrop"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/ic_arrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <!-- Another Divider -->
+  <View
+      android:id="@+id/divider2"
+      android:layout_width="0dp"
+      android:layout_height="1dp"
+      android:background="@android:color/darker_gray"
+      app:layout_constraintTop_toBottomOf="@id/about_us_line"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:padding="12dp"
+      app:layout_constraintTop_toBottomOf="@id/divider2"
+      tools:ignore="MissingConstraints"
+      android:id="@+id/logout_line">
+
+    <ImageView
+        android:id="@+id/logout_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_logout"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/detail_about_us"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Tentang Kami"
+        android:text="Keluar"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/next_arrow"
-        app:layout_constraintStart_toEndOf="@+id/info_icon"
+        app:layout_constraintEnd_toStartOf="@+id/logout_arrow"
+        app:layout_constraintStart_toEndOf="@+id/logout_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/next_arrow"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:id="@+id/logout_arrow"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:scaleType="centerCrop"
-        android:background="@drawable/arrow_next"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/ic_arrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

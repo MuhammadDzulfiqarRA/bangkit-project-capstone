@@ -17,7 +17,9 @@
     <string name="already_have_account">Sudah punya akun?</string>
     <string name="lets_read">Mari Membaca</string>
     <string name="data_invalid">Mari Membaca</string>
-    <string name="client_id">192471483907-40r93664umsfi84lhqupp339m0juo7fs.apps.googleusercontent.com</string>
+    <string name="client_id">596878695317-so3gpn5o3se56kreoeva9in68bgmohd7.apps.googleusercontent.com</string>
+    <string name="default_web_client_id">634205982985-e9u0tshrshrn8gkve9k2cts3pprqmcr5.apps.googleusercontent.com</string>
+
 
 
 </resources>

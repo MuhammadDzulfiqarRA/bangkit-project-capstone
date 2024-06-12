@@ -32,13 +32,9 @@ class ReadingAdapter : ListAdapter<ItemsItem, ReadingAdapter.MyViewHolder>(DIFF_
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val users = getItem(position)
         holder.bind(users)
-//        holder.itemView.setOnClickListener {
-//            val intent = Intent(holder.itemView.context, DetailActivity::class.java).apply {
-//                putExtra(DetailActivity.EXTRA_LOGIN, "${users.login}")
-//            }
-//            holder.itemView.context.startActivity(intent)
-//        }
+//        holder.itemView.set
     }
+
 
         companion object {
             val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ItemsItem>() {

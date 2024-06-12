@@ -14,15 +14,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ABAI"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.activity.AchievmentActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.gms.auth.api.signin.API_KEY"
-            android:value="192471483907-40r93664umsfi84lhqupp339m0juo7fs.apps.googleusercontent.com" />
+            android:value="192471483907-ebbeutgthk6kstinp9aufvb7hprt92o5.apps.googleusercontent.com" />
+
         <activity
             android:name=".ui.activity.ReadingActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.RegisterActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".ui.activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,9 +37,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.activity.LoginActivity"
-            android:exported="false" />
         <activity
             android:name=".ui.activity.DetailStoryActivity"
             android:exported="true" />
@@ -42,10 +46,10 @@
             android:parentActivityName=".ui.activity.DashboardActivity" />
         <activity
             android:name=".ui.activity.DashboardActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".ui.activity.AccountActivity"
-            android:exported="true"/>
+            android:exported="true" />
     </application>
 
 </manifest>
