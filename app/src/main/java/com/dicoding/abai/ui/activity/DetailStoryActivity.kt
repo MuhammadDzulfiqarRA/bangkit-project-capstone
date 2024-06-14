@@ -9,6 +9,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.dicoding.abai.R
 import com.dicoding.abai.databinding.ActivityDetailStoryBinding
 import com.dicoding.abai.helper.ConstantsObject
+import com.dicoding.abai.response.DataItem
 import com.dicoding.abai.response.ItemsItem
 
 class DetailStoryActivity : AppCompatActivity() {
@@ -19,12 +20,15 @@ class DetailStoryActivity : AppCompatActivity() {
         binding = ActivityDetailStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val storyData = intent.getParcelableExtra<ItemsItem>(ConstantsObject.DASHBOARD_TO_DETAIL)
+        val storyData = intent.getParcelableExtra<DataItem>(ConstantsObject.DASHBOARD_TO_DETAIL)
         if (storyData != null) {
-            binding.tvStoryTitle.text = storyData.login
-            binding.tvStoryDesc.text = storyData.login
+            binding.tvStoryTitle.text = storyData.title
+            binding.tvStoryDesc.text = storyData.overview
+            binding.tvStoryAuthor.text = storyData.author
+            binding.tvStoryFrom.text = storyData.origin
             Glide.with(this)
-                .load(storyData.avatarUrl)
+                .load(storyData.thumbnail)
+                .placeholder(R.drawable.ic_baseline_broken_image_24)
                 .error(R.drawable.ic_baseline_broken_image_24)
                 .into(binding.imgDetailStory)
         } else {
@@ -33,7 +37,9 @@ class DetailStoryActivity : AppCompatActivity() {
         }
 
         binding.btnLetsReading.setOnClickListener {
-            startActivity(Intent(this@DetailStoryActivity, ReadingActivity::class.java))
+            val intent = Intent(this@DetailStoryActivity, ReadingActivity::class.java )
+            intent.putExtra(ConstantsObject.DETAIL_TO_READING, storyData )
+            startActivity(intent)
         }
 
     }

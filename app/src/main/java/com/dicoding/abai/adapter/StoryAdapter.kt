@@ -7,17 +7,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.dicoding.abai.R
 import com.dicoding.abai.adapter.StoryAdapter.MyViewHolder.Companion.DIFF_CALLBACK
 import com.dicoding.abai.databinding.ItemRvBinding
 import com.dicoding.abai.helper.ConstantsObject
-import com.dicoding.abai.response.ItemsItem
+import com.dicoding.abai.response.DataItem
 import com.dicoding.abai.ui.activity.DetailStoryActivity
 
-class StoryAdapter : ListAdapter<ItemsItem, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class StoryAdapter : ListAdapter<DataItem, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
-    private var onItemClickListener: ((ItemsItem) -> Unit)? = null
+    private var onItemClickListener: ((DataItem) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (ItemsItem) -> Unit) {
+    fun setOnItemClickListener(listener: (DataItem) -> Unit) {
         onItemClickListener = listener
     }
 
@@ -37,23 +38,24 @@ class StoryAdapter : ListAdapter<ItemsItem, StoryAdapter.MyViewHolder>(DIFF_CALL
     }
 
     class MyViewHolder(val binding: ItemRvBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(bindItem: ItemsItem) {
+        fun bind(bindItem: DataItem) {
             binding.apply {
-                tvItemTitleName.text = bindItem.login
-                tvItemDescription.text = bindItem.login
+                tvItemTitleName.text = bindItem.title
+                tvItemDescription.text = bindItem.overview
                 Glide.with(itemView)
-                    .load(bindItem.avatarUrl)
+                    .load(bindItem.thumbnail)
+                    .placeholder(R.drawable.ic_baseline_broken_image_24)
+                    .error(R.drawable.ic_baseline_broken_image_24)
                     .into(imgCoverStory)
             }
         }
-
         companion object {
-            val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ItemsItem>() {
-                override fun areItemsTheSame(oldItem: ItemsItem, newItem: ItemsItem): Boolean {
+            val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItem>() {
+                override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
                     return oldItem == newItem
                 }
 
-                override fun areContentsTheSame(oldItem: ItemsItem, newItem: ItemsItem): Boolean {
+                override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
                     return oldItem == newItem
                 }
             }

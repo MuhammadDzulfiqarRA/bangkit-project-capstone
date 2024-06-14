@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dicoding.abai.adapter.StoryAdapter
 import com.dicoding.abai.databinding.FragmentDisplayDashboardBinding
+import com.dicoding.abai.response.DataItem
 import com.dicoding.abai.response.ItemsItem
 import com.dicoding.abai.viewmodel.DashboardViewModel
 
@@ -53,16 +54,30 @@ class DisplayDashboardFragment : Fragment() {
             username = it.getString(ARG_USERNAME, username)
         }
 
-        dashboardViewModel.user.observe(viewLifecycleOwner, Observer { userList ->
-            setUserData(userList)
+//        dashboardViewModel.user.observe(viewLifecycleOwner, Observer { userList ->
+//            setUserData(userList)
+//        })
+
+        dashboardViewModel.stories.observe(viewLifecycleOwner, Observer { userList ->
+            setStoriesData(userList)
         })
     }
 
-    private fun setUserData(userList: List<ItemsItem?>?) {
-        if (userList.isNullOrEmpty()) {
+//    private fun setUserData(userList: List<ItemsItem?>?) {
+//        if (userList.isNullOrEmpty()) {
+//            showEmptyListMessage()
+//        } else {
+//            adapter.submitList(userList)
+//            binding.rvFragmentDisplay.visibility = View.VISIBLE
+//            binding.textUsername.visibility = View.GONE
+//        }
+//    }
+
+    private fun setStoriesData(storiesList: List<DataItem?>?) {
+        if (storiesList.isNullOrEmpty()) {
             showEmptyListMessage()
         } else {
-            adapter.submitList(userList)
+            adapter.submitList(storiesList)
             binding.rvFragmentDisplay.visibility = View.VISIBLE
             binding.textUsername.visibility = View.GONE
         }

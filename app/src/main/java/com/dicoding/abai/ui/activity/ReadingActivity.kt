@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.abai.R
 import com.dicoding.abai.adapter.ReadingAdapter
 import com.dicoding.abai.databinding.ActivityReadingBinding
+import com.dicoding.abai.helper.ConstantsObject
+import com.dicoding.abai.response.DataItem
+import com.dicoding.abai.response.DataItemStory
 import com.dicoding.abai.response.ItemsItem
 import com.dicoding.abai.viewmodel.ReadingViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -26,6 +29,7 @@ class ReadingActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var fab: FloatingActionButton
     private var totalItems = 0
     private var pausedPosition = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,16 +50,22 @@ class ReadingActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
         }
 
-        readingViewModel.user.observe(this) {
+        val storyDataIntent = intent.getParcelableExtra<DataItem>(ConstantsObject.DETAIL_TO_READING)
+        if (storyDataIntent != null) {
+            storyDataIntent.id?.let { readingViewModel.storyDataReading(it, storyDataIntent.id) }
+            binding.tvStoryTitle.text = storyDataIntent.title
+
+        }
+        readingViewModel.storyReading.observe(this) {
             setUsersData(it)
         }
     }
 
-    private fun setUsersData(users: List<ItemsItem?>?) {
+    private fun setUsersData(storyDataReading: List<DataItemStory?>?) {
         val adapter = ReadingAdapter()
-        adapter.submitList(users)
+        adapter.submitList(storyDataReading)
         binding.rvReading.adapter = adapter
-        totalItems = users?.size ?: 0
+        totalItems = storyDataReading?.size ?: 0
         binding.progressBar.max = totalItems
     }
 
@@ -91,9 +101,9 @@ class ReadingActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
     }
 
-    private fun speakNext(items: List<ItemsItem>) {
+    private fun speakNext(items: List<DataItemStory>) {
         if (currentIndex < items.size) {
-            val text = items[currentIndex].login // Adjust based on actual text field
+            val text = items[currentIndex].story // Adjust based on actual text field
             textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, "UTTERANCE_ID")
             textToSpeech.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                 override fun onStart(utteranceId: String?) {

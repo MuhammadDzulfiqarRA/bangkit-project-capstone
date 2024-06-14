@@ -7,19 +7,22 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.dicoding.abai.R
 import com.dicoding.abai.databinding.ItemReadingBinding
 import com.dicoding.abai.databinding.ItemRvBinding
 import com.dicoding.abai.helper.ConstantsObject
-import com.dicoding.abai.response.ItemsItem
+import com.dicoding.abai.response.DataItemStory
 import com.dicoding.abai.ui.activity.DetailStoryActivity
 
-class ReadingAdapter : ListAdapter<ItemsItem, ReadingAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class ReadingAdapter : ListAdapter<DataItemStory, ReadingAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     class MyViewHolder(val binding: ItemReadingBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(users: ItemsItem) {
-            binding.tvReadingDesc.text = "${users.login}"
+        fun bind(storyData: DataItemStory) {
+            binding.tvReadingDesc.text = storyData.story
             Glide.with(binding.imgReading)
-                .load("${users.avatarUrl}")
+                .load(storyData.thumbnail)
+                .placeholder(R.drawable.ic_baseline_broken_image_24)
+                .error(R.drawable.ic_baseline_broken_image_24)
                 .into(binding.imgReading)
         }
     }
@@ -37,12 +40,12 @@ class ReadingAdapter : ListAdapter<ItemsItem, ReadingAdapter.MyViewHolder>(DIFF_
 
 
         companion object {
-            val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ItemsItem>() {
-                override fun areItemsTheSame(oldItem: ItemsItem, newItem: ItemsItem): Boolean {
+            val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItemStory>() {
+                override fun areItemsTheSame(oldItem: DataItemStory, newItem: DataItemStory): Boolean {
                     return oldItem == newItem
                 }
 
-                override fun areContentsTheSame(oldItem: ItemsItem, newItem: ItemsItem): Boolean {
+                override fun areContentsTheSame(oldItem: DataItemStory, newItem: DataItemStory): Boolean {
                     return oldItem == newItem
                 }
             }
