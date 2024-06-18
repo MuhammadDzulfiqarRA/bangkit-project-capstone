@@ -45,9 +45,9 @@ class DashboardActivity : AppCompatActivity() {
         val firebaseUser = mAuth.currentUser
 
         if (firebaseUser == null) {
-//            // Not signed in, launch the Login activity
-//            startActivity(Intent(this, LoginActivity::class.java))
-//            finish()
+            // Not signed in, launch the Login activity
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         } else {
             val userName = firebaseUser.displayName
             binding.textViewUsername.text = "${userName}"

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.AchievmentActivity">
+    tools:context=".ui.activity.AchievementActivity">
 
 
     <ImageView
@@ -48,8 +48,8 @@
             android:layout_height="40dp"
             android:src="@drawable/diamond_rank" />
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            style="@style/progressBar"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -63,6 +63,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/mission_line"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
@@ -71,14 +72,22 @@
         android:background="@color/lightBlue"
         android:backgroundTint="@color/lightBlue"
         app:layout_constraintTop_toBottomOf="@id/linear_layout">
-
         <TextView
             style="@style/TextHeading2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Peringkat" />
-
+            android:text="Misi" />
 
     </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_mission_item"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:listitem="@layout/item_mission"
+        app:layout_constraintTop_toBottomOf="@id/mission_line" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

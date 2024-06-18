@@ -30,6 +30,11 @@ class SettingActivity : AppCompatActivity() {
         binding.userAccountLine.setOnClickListener {
             startActivity(Intent(this@SettingActivity, AccountActivity::class.java))
         }
+
+        binding.achievementLine.setOnClickListener {
+            startActivity(Intent(this@SettingActivity, AchievementActivity::class.java))
+        }
+
         binding.logoutLine.setOnClickListener{
             signOut()
         }

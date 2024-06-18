@@ -12,7 +12,7 @@ data class StoriesResponse(
 
 
 @Parcelize
-data class DataItem(
+data class  DataItem(
 	val overview: String? = null,
 	val thumbnail: String? = null,
 	val updatedAt: String? = null,

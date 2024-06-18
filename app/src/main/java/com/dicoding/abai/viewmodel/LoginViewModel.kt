@@ -12,6 +12,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dicoding.abai.helper.LoginRequest
+import com.dicoding.abai.helper.RegisterRequest
+import com.dicoding.abai.response.LoginResponse
+import com.dicoding.abai.response.RegisterResponse
+import com.dicoding.abai.retrofit.ApiConfig
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
@@ -20,10 +25,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.launch
+import retrofit2.Callback
+import retrofit2.Call
+import retrofit2.Response
 
 class LoginViewModel : ViewModel() {
 
     private var auth: FirebaseAuth
+
+    private lateinit var userName: String
+    private  lateinit var userEmail: String
+    private  lateinit var userPassword: String
 
     private val _signInSuccess = MutableLiveData<FirebaseUser?>()
     val signInSuccess: LiveData<FirebaseUser?> = _signInSuccess
@@ -33,6 +45,18 @@ class LoginViewModel : ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
+
+    private val _registerSuccess = MutableLiveData<RegisterResponse?>()
+    val registerSuccess: LiveData<RegisterResponse?> = _registerSuccess
+
+    private val _registerError = MutableLiveData<Throwable?>()
+    val registerError: LiveData<Throwable?> = _registerError
+
+    private val _isLoginSuccess: MutableLiveData<LoginResponse> = MutableLiveData()
+    val isLoginSuccess: LiveData<LoginResponse> = _isLoginSuccess
+
+    private val _isLoginError: MutableLiveData<Throwable?> = MutableLiveData()
+    val isLoginError: LiveData<Throwable?> = _isLoginError
 
     init {
         auth = FirebaseAuth.getInstance()
@@ -100,7 +124,14 @@ class LoginViewModel : ViewModel() {
                 if (task.isSuccessful) {
                     Log.d(TAG, "signInWithCredential:success")
                     val user: FirebaseUser? = auth.currentUser
-                    _signInSuccess.postValue(user)
+//                    _signInSuccess.postValue(user)
+                    userName = user?.displayName.toString().replace("\\s+".toRegex(), "")
+                    userEmail = user?.email.toString()
+                    userPassword = userName.toLowerCase() + "@User1"
+                    Log.d(TAG, "firebaseAuthWithGoogle: EMAIL = ${userEmail}")
+                    Log.d(TAG, "firebaseAuthWithGoogle: USERNAME = ${userName}")
+                    Log.d(TAG, "firebaseAuthWithGoogle: PASSWORD = ${userPassword}")
+                    login(userName, userPassword)
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                     _signInFailure.postValue(task.exception)
@@ -108,4 +139,100 @@ class LoginViewModel : ViewModel() {
                 _loading.value = false
             }
     }
+
+//    private fun register(firstname: String, lastname: String, username: String, email: String, password: String) {
+//        _loading.value = true
+//        Log.d("REGISTER", "Registering with email: $email")
+//        viewModelScope.launch {
+//            val call: Call<RegisterResponse> = ApiConfig.getApiService().register(firstname, lastname, username, email, password)
+//            call.enqueue(object : Callback<RegisterResponse> {
+//                override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+//                    if (response.isSuccessful) {
+//                        Log.d("REGISTER", "onResponse: REGISTER SUCCESS")
+//                        login(userEmail)
+//                    } else {
+//                        _registerError.postValue(Exception("Registration failed with code: ${response.code()}"))
+//                    }
+//                    _loading.value = false
+//                }
+//
+//                override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+//                    _registerError.postValue(t)
+//                    _loading.value = false
+//                }
+//            })
+//        }
+//    }
+
+
+    private fun register(firstname: String, lastname: String, username: String, email: String, password: String) {
+        _loading.value = true
+        Log.d("REGISTER", "Registering with email: $email")
+
+        val requestBody = RegisterRequest(firstname, lastname, username, email, password)
+
+        viewModelScope.launch {
+            try {
+                val response = ApiConfig.getApiService().register(requestBody)
+                response.enqueue(object : Callback<RegisterResponse> {
+                    override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+                        _loading.value = false
+                        if (response.isSuccessful) {
+                            Log.d("REGISTER", "onResponse: REGISTER SUCCESS")
+                            login(username, password)
+                            // Handle successful registration
+                        } else {
+                            _registerError.postValue(Exception("Registration failed with code: ${response.code()}"))
+                        }
+                    }
+
+                    override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                        _loading.value = false
+                        _registerError.postValue(t)
+                    }
+                })
+            } catch (t: Throwable) {
+                _loading.value = false
+                _registerError.postValue(t)
+            }
+        }
+    }
+
+
+    private fun login(username: String, password: String) {
+        _loading.value = true
+        Log.d("LOGIN", "Login: $username, $password")
+
+        val requestBody = LoginRequest(username, password)
+
+        viewModelScope.launch {
+            try {
+                val response = ApiConfig.getApiService().login(requestBody)
+                response.enqueue(object : Callback<LoginResponse> {
+                    override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                        _loading.value = false
+                        if (response.isSuccessful) {
+                            Log.d("LOGIN", "onResponse: LOGIN SUCCESS")
+                            _isLoginSuccess.value = response.body() as LoginResponse
+                        } else {
+                            register(username, username, username, userEmail, password)
+                            _isLoginError.postValue(Exception("Login failed with code: ${response.code()}"))
+                        }
+                    }
+
+                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                        _loading.value = false
+                        _isLoginError.postValue(t)
+                    }
+                })
+            } catch (t: Throwable) {
+                _loading.value = false
+                _isLoginError.postValue(t)
+            }
+        }
+    }
+
+
+
+
 }

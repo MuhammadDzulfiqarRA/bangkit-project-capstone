@@ -1,5 +1,6 @@
 package com.dicoding.abai.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
@@ -54,10 +55,14 @@ class ReadingActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         if (storyDataIntent != null) {
             storyDataIntent.id?.let { readingViewModel.storyDataReading(it, storyDataIntent.id) }
             binding.tvStoryTitle.text = storyDataIntent.title
-
         }
+
         readingViewModel.storyReading.observe(this) {
             setUsersData(it)
+        }
+
+        binding.btnBack.setOnClickListener {
+            startActivity(Intent(this@ReadingActivity, DetailStoryActivity::class.java ))
         }
     }
 

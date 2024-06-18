@@ -27,7 +27,7 @@ class DetailStoryActivity : AppCompatActivity() {
             binding.tvStoryAuthor.text = storyData.author
             binding.tvStoryFrom.text = storyData.origin
             Glide.with(this)
-                .load(storyData.thumbnail)
+                .load("http://192.168.0.100:3000/api/v1/thumbnails/display/${storyData.thumbnail}")
                 .placeholder(R.drawable.ic_baseline_broken_image_24)
                 .error(R.drawable.ic_baseline_broken_image_24)
                 .into(binding.imgDetailStory)

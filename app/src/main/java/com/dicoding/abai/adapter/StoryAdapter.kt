@@ -43,7 +43,7 @@ class StoryAdapter : ListAdapter<DataItem, StoryAdapter.MyViewHolder>(DIFF_CALLB
                 tvItemTitleName.text = bindItem.title
                 tvItemDescription.text = bindItem.overview
                 Glide.with(itemView)
-                    .load(bindItem.thumbnail)
+                    .load("http://192.168.0.100:3000/api/v1/thumbnails/display/${bindItem.thumbnail}")
                     .placeholder(R.drawable.ic_baseline_broken_image_24)
                     .error(R.drawable.ic_baseline_broken_image_24)
                     .into(imgCoverStory)

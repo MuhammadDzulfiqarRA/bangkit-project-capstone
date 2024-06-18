@@ -39,8 +39,6 @@ class DisplayDashboardFragment : Fragment() {
 
         val layoutManager = GridLayoutManager(requireActivity(), 2)
         binding.rvFragmentDisplay.layoutManager = layoutManager
-        val itemDecoration = DividerItemDecoration(requireActivity(), layoutManager.orientation)
-        binding.rvFragmentDisplay.addItemDecoration(itemDecoration)
 
         // Set adapter here
         binding.rvFragmentDisplay.adapter = adapter

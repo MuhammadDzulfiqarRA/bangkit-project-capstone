@@ -19,7 +19,7 @@
 
 
         <activity
-            android:name=".ui.activity.AchievmentActivity"
+            android:name=".ui.activity.AchievementActivity"
             android:exported="false" />
 
         <meta-data
