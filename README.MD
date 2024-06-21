@@ -1,3 +1,7 @@
+#### ABAI (Ayo Baca Indonesia) 
+ABA-I is an innovative mobile application dedicated to revitalizing interest in Indonesian folktales among the younger generation.
+
+
 # Team C241-PS190 <br>
 
 (ML) M009D4KY1942 – Jason Christopher – Universitas Gunadarma - [Active]<br>
