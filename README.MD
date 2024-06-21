@@ -10,4 +10,4 @@
 
 #### Other Repositories
 
-![ML](https://github.com/JC0ffee/mychatbot)
+[ML](https://github.com/JC0ffee/mychatbot)
