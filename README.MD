@@ -1,4 +1,4 @@
-#### ABAI (Ayo Baca Indonesia) 
+# ABA-I (Ayo Baca Indonesia) 
 ABA-I is an innovative mobile application dedicated to revitalizing interest in Indonesian folktales among the younger generation.
 
 
@@ -15,3 +15,26 @@ ABA-I is an innovative mobile application dedicated to revitalizing interest in 
 #### Other Repositories
 
 <p>[ML]<a>https://github.com/JC0ffee/mychatbot</a></p>
+<p>[CC]<a>https://github.com/)
+
+# Our Features
+
+- Authentication : We use Social Login OAuth2, user can directly sign in from google account.
+
+- Chatbot
+
+- Achievement feature
+
+- Quiz Feature
+
+- Reccomendation Feature
+
+- Text-to-speech Feature
+
+
+# How to Get our App
+
+- Clone or Download (zip) our project 
+- Open Android Studio
+- Open our folder using Android Studo
+- Run the Folder
