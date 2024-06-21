@@ -19,6 +19,16 @@
     <string name="data_invalid">Mari Membaca</string>
     <string name="client_id">596878695317-so3gpn5o3se56kreoeva9in68bgmohd7.apps.googleusercontent.com</string>
     <string name="default_web_client_id">634205982985-e9u0tshrshrn8gkve9k2cts3pprqmcr5.apps.googleusercontent.com</string>
+    <string name="mission1_title">Baca 5 Cerita</string>
+    <string name="mission2_title">Baca 10 Cerita</string>
+    <string name="mission3_title">Baca 15 Cerita</string>
+    <string name="mission4_title">Baca 25 Cerita</string>
+    <string name="mission5_title">Baca 35 Cerita</string>
+    <string name="mission6_title">Baca 45 Cerita</string>
+    <string name="level_name_0">Unranked</string>
+    <string name="level_name_1">Silver</string>
+    <string name="level_name_2">Gold</string>
+    <string name="level_name_3">Diamond</string>
 
 
 

@@ -12,8 +12,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dicoding.abai.database.User
+import com.dicoding.abai.database.UserRepository
 import com.dicoding.abai.helper.LoginRequest
 import com.dicoding.abai.helper.RegisterRequest
+import com.dicoding.abai.helper.UserModel
 import com.dicoding.abai.response.LoginResponse
 import com.dicoding.abai.response.RegisterResponse
 import com.dicoding.abai.retrofit.ApiConfig
@@ -29,13 +32,17 @@ import retrofit2.Callback
 import retrofit2.Call
 import retrofit2.Response
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel (private val repository: UserRepository) : ViewModel() {
 
     private var auth: FirebaseAuth
 
     private lateinit var userName: String
     private  lateinit var userEmail: String
     private  lateinit var userPassword: String
+    private  lateinit var userPhotoUrl: String
+    private  lateinit var errorCode: String
+
+    private lateinit var userId: String
 
     private val _signInSuccess = MutableLiveData<FirebaseUser?>()
     val signInSuccess: LiveData<FirebaseUser?> = _signInSuccess
@@ -60,6 +67,16 @@ class LoginViewModel : ViewModel() {
 
     init {
         auth = FirebaseAuth.getInstance()
+    }
+
+    fun saveSession(user: UserModel) {
+        viewModelScope.launch {
+            repository.saveSession(user)
+        }
+    }
+
+    fun getErrorCode(): String {
+        return errorCode
     }
 
     fun signIn(context: Context, clientId: String) {
@@ -128,9 +145,11 @@ class LoginViewModel : ViewModel() {
                     userName = user?.displayName.toString().replace("\\s+".toRegex(), "")
                     userEmail = user?.email.toString()
                     userPassword = userName.toLowerCase() + "@User1"
+                    userPhotoUrl = user?.photoUrl.toString()
                     Log.d(TAG, "firebaseAuthWithGoogle: EMAIL = ${userEmail}")
                     Log.d(TAG, "firebaseAuthWithGoogle: USERNAME = ${userName}")
                     Log.d(TAG, "firebaseAuthWithGoogle: PASSWORD = ${userPassword}")
+                    Log.d(TAG, "firebaseAuthWithGoogle: PHOTO = ${userPhotoUrl}")
                     login(userName, userPassword)
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
@@ -139,31 +158,6 @@ class LoginViewModel : ViewModel() {
                 _loading.value = false
             }
     }
-
-//    private fun register(firstname: String, lastname: String, username: String, email: String, password: String) {
-//        _loading.value = true
-//        Log.d("REGISTER", "Registering with email: $email")
-//        viewModelScope.launch {
-//            val call: Call<RegisterResponse> = ApiConfig.getApiService().register(firstname, lastname, username, email, password)
-//            call.enqueue(object : Callback<RegisterResponse> {
-//                override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
-//                    if (response.isSuccessful) {
-//                        Log.d("REGISTER", "onResponse: REGISTER SUCCESS")
-//                        login(userEmail)
-//                    } else {
-//                        _registerError.postValue(Exception("Registration failed with code: ${response.code()}"))
-//                    }
-//                    _loading.value = false
-//                }
-//
-//                override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-//                    _registerError.postValue(t)
-//                    _loading.value = false
-//                }
-//            })
-//        }
-//    }
-
 
     private fun register(firstname: String, lastname: String, username: String, email: String, password: String) {
         _loading.value = true
@@ -179,6 +173,10 @@ class LoginViewModel : ViewModel() {
                         _loading.value = false
                         if (response.isSuccessful) {
                             Log.d("REGISTER", "onResponse: REGISTER SUCCESS")
+                            viewModelScope.launch {
+                                saveUserToDatabase(userName, userEmail, userPhotoUrl, 0, 0, 0)
+                                Log.d(TAG, " SAVE USER: ${userName} ${userEmail} ${userPhotoUrl} ")
+                            }
                             login(username, password)
                             // Handle successful registration
                         } else {
@@ -214,8 +212,17 @@ class LoginViewModel : ViewModel() {
                         if (response.isSuccessful) {
                             Log.d("LOGIN", "onResponse: LOGIN SUCCESS")
                             _isLoginSuccess.value = response.body() as LoginResponse
+//                            viewModelScope.launch {
+//                                repository.deleteAllUsers()
+//                            }
+                            viewModelScope.launch {
+                                val idUser = repository.getUserIdByUsername(username)
+                                userId = idUser.toString()
+                                saveSession(UserModel(username))
+                            }
                         } else {
                             register(username, username, username, userEmail, password)
+                            errorCode = response.code().toString()
                             _isLoginError.postValue(Exception("Login failed with code: ${response.code()}"))
                         }
                     }
@@ -232,6 +239,20 @@ class LoginViewModel : ViewModel() {
         }
     }
 
+    private fun saveUserToDatabase(username: String, email: String, photoUrl: String?, rank: Int, storyCount: Int, missionCompleted: Int) {
+        val newUser = User(username = username, email = email, photoUrl = photoUrl, rank = rank, storyCount = storyCount, missionCompleted = missionCompleted )
+        viewModelScope.launch {
+            try {
+                repository.saveUser(newUser)
+            } catch (e: Exception) {
+                Log.e("LoginViewModel", "Error saving user to database: ${e.message}")
+            }
+        }
+    }
+
+    fun getUserId() : String {
+        return userId
+    }
 
 
 

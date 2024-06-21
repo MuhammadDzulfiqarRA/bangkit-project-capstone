@@ -44,6 +44,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_mission_name" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/missionProgressBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -55,6 +56,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/img_mission" />
+
+        <Button
+            android:id="@+id/btn_claim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Claim"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/missionProgressBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

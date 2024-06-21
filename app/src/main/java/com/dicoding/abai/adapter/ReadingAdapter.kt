@@ -20,7 +20,7 @@ class ReadingAdapter : ListAdapter<DataItemStory, ReadingAdapter.MyViewHolder>(D
         fun bind(storyData: DataItemStory) {
             binding.tvReadingDesc.text = storyData.story
             Glide.with(binding.imgReading)
-                . load("http://192.168.0.100:3000/api/v1/thumbnails/display/${storyData.thumbnail}")
+                .load(storyData.thumbnail)
                 .placeholder(R.drawable.ic_baseline_broken_image_24)
                 .error(R.drawable.ic_baseline_broken_image_24)
                 .into(binding.imgReading)

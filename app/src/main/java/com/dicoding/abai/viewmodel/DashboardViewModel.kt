@@ -1,22 +1,29 @@
 package com.dicoding.abai.viewmodel
 
-import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.dicoding.abai.Event
+import com.dicoding.abai.database.UserRepository
+import com.dicoding.abai.helper.UserModel
+import com.dicoding.abai.helper.UserPreference
 import com.dicoding.abai.response.DataItem
 import com.dicoding.abai.response.DummyResponseAPI
 import com.dicoding.abai.response.ItemsItem
 import com.dicoding.abai.response.StoriesResponse
 import com.dicoding.abai.retrofit.ApiConfig
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.math.log
 
-class DashboardViewModel: ViewModel() {
+class DashboardViewModel (
+    private val repository: UserRepository,
+    private val userPreference: UserPreference
+) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -31,9 +38,32 @@ class DashboardViewModel: ViewModel() {
     private val _stories = MutableLiveData<List<DataItem?>?>()
     val stories: MutableLiveData<List<DataItem?>?> = _stories
 
+    private val _userId = MutableLiveData<Int?>()
+    val userId: MutableLiveData<Int?> = _userId
+
+    private val _userMissionCompleted = MutableLiveData<Int>()
+    val userMissionCompleted: LiveData<Int> = _userMissionCompleted
 
     init {
         storiesViewer()
+    }
+
+    fun getSession(): LiveData<UserModel> {
+        return repository.getSession().asLiveData()
+    }
+
+    fun getUserIdByUsername(username: String) {
+        viewModelScope.launch {
+            val userId = repository.getUserIdByUsername(username)
+            _userId.postValue(userId)
+        }
+    }
+
+    fun getUserMissionCompleted(userId : Int) {
+        viewModelScope.launch {
+            val missionCompleted = repository.getUserMissionCompleted( userId)
+            _userMissionCompleted.postValue(missionCompleted)
+        }
     }
 
     private fun userViewer() {

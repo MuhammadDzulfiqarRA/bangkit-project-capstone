@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
+    id("kotlin-kapt")
 }
 
 android {
@@ -76,6 +77,13 @@ dependencies {
     implementation ("com.google.firebase:firebase-bom:31.5.0")
     implementation ("com.google.android.gms:play-services-auth:20.5.0")
     implementation("com.google.firebase:firebase-analytics:17.5.0")
+
+    //Room Database
+    implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-common:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
 }
 

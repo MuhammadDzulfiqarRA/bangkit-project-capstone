@@ -7,48 +7,93 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.AchievementActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activity_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        style="@style/activityHeader"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/TextHeading2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Peringkat"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <ImageView
         android:id="@+id/img_ranking"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="32dp"
         android:foregroundGravity="center"
-        android:scaleType="fitXY"
-        android:scaleX="1.5"
-        android:scaleY="1.5"
-        android:src="@drawable/diamond_rank"
+        android:scaleX="1.8"
+        android:scaleY="1.8"
+        android:src="@drawable/ic_rank_diamond"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/activity_header" />
 
     <TextView
-        android:id="@+id/tv_next_level"
+        android:id="@+id/tv_level_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Level berikutnya"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:hint="Silver"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/img_ranking" />
 
+    <TextView
+        android:id="@+id/tv_next_level"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Level berikutnya"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_level_name" />
+
     <LinearLayout
         android:id="@+id/linear_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-4dp"
+        android:layout_marginTop="-10dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_next_level">
 
         <ImageView
+            android:id="@+id/img_current_rank"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/diamond_rank" />
+            android:src="@drawable/ic_rank_diamond" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/rankProgressBar"
             style="@style/progressBar"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
@@ -57,6 +102,7 @@
             android:scaleY="3" />
 
         <ImageView
+            android:id="@+id/img_next_rank"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/diamond_rank" />
@@ -72,22 +118,498 @@
         android:background="@color/lightBlue"
         android:backgroundTint="@color/lightBlue"
         app:layout_constraintTop_toBottomOf="@id/linear_layout">
+
         <TextView
             style="@style/TextHeading2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Misi" />
+            android:text="Misi"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_mission_item"
-        android:layout_width="match_parent"
+    <ScrollView
+        android:id="@+id/scrollViewMission"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/item_mission"
-        app:layout_constraintTop_toBottomOf="@id/mission_line" />
+        app:layout_constraintTop_toBottomOf="@id/mission_line">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scrollViewLayoutConstraint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--    MISSION LAYOUT 1 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mission1"
+                style="@style/missionStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/scrollViewLayoutConstraint">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_mission1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_mission"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_mission_name1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/mission1_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/img_mission1"
+                    app:layout_constraintTop_toTopOf="@id/img_mission1" />
+
+                <TextView
+                    android:id="@+id/tv_mission_point1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:hint="+500 poin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_mission_name1"
+                    app:layout_constraintTop_toBottomOf="@id/tv_mission_name1" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/missionProgressBar1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:progress="0"
+                    android:scaleY="3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/img_mission1" />
+
+                <Button
+                    android:id="@+id/btn_claim1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Claim"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/img_mission1" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--    DIVIDER 1 -->
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mission1" />
+
+            <!--    MISSION LAYOUT 2 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mission2"
+                style="@style/missionStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider1">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_mission2"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_mission"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_mission_name2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/mission2_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/img_mission2"
+                    app:layout_constraintTop_toTopOf="@id/img_mission2" />
+
+                <TextView
+                    android:id="@+id/tv_mission_point2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:hint="+500 poin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_mission_name2"
+                    app:layout_constraintTop_toBottomOf="@id/tv_mission_name2" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/missionProgressBar2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:progress="0"
+                    android:scaleY="3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/img_mission2" />
+
+                <Button
+                    android:id="@+id/btn_claim2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Claim"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/img_mission2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--    DIVIDER 2 -->
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mission2" />
+
+            <!--    MISSION LAYOUT 3 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mission3"
+                style="@style/missionStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider2">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_mission3"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_mission"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_mission_name3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/mission3_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/img_mission3"
+                    app:layout_constraintTop_toTopOf="@id/img_mission3" />
+
+                <TextView
+                    android:id="@+id/tv_mission_point3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:hint="+500 poin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_mission_name3"
+                    app:layout_constraintTop_toBottomOf="@id/tv_mission_name3" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/missionProgressBar3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:progress="0"
+                    android:scaleY="3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/img_mission3" />
+
+                <Button
+                    android:id="@+id/btn_claim3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Claim"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/img_mission3" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--    DIVIDER 3 -->
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mission3" />
+
+            <!--    MISSION LAYOUT 4 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mission4"
+                style="@style/missionStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider3">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_mission4"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_mission"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_mission_name4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/mission4_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/img_mission4"
+                    app:layout_constraintTop_toTopOf="@id/img_mission4" />
+
+                <TextView
+                    android:id="@+id/tv_mission_point4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:hint="+500 poin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_mission_name4"
+                    app:layout_constraintTop_toBottomOf="@id/tv_mission_name4" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/missionProgressBar4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:progress="0"
+                    android:scaleY="3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/img_mission4" />
+
+                <Button
+                    android:id="@+id/btn_claim4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Claim"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/img_mission4" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--    DIVIDER 4 -->
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mission4" />
+
+            <!--    MISSION LAYOUT 5 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mission5"
+                style="@style/missionStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider4">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_mission5"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_mission"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_mission_name5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/mission5_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/img_mission5"
+                    app:layout_constraintTop_toTopOf="@id/img_mission5" />
+
+                <TextView
+                    android:id="@+id/tv_mission_point5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:hint="+500 poin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_mission_name5"
+                    app:layout_constraintTop_toBottomOf="@id/tv_mission_name5" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/missionProgressBar5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:progress="0"
+                    android:scaleY="3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/img_mission5" />
+
+                <Button
+                    android:id="@+id/btn_claim5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Claim"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/img_mission5" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--    DIVIDER 5 -->
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mission5" />
+
+            <!--    MISSION LAYOUT 6 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mission6"
+                style="@style/missionStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider5">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_mission6"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_mission"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_mission_name6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/mission6_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/img_mission6"
+                    app:layout_constraintTop_toTopOf="@id/img_mission6" />
+
+                <TextView
+                    android:id="@+id/tv_mission_point6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:hint="+500 poin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_mission_name6"
+                    app:layout_constraintTop_toBottomOf="@id/tv_mission_name6" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/missionProgressBar6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:progress="0"
+                    android:scaleY="3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/img_mission6" />
+
+                <Button
+                    android:id="@+id/btn_claim6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Claim"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/img_mission6" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

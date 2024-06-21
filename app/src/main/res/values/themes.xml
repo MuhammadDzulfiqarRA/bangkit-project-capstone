@@ -25,11 +25,18 @@
         <item name="android:background">@color/creamyYellow</item>
     </style>
     
+    <style name="activityHeader">
+        <item name="android:background">@color/lightBlue</item>
+    </style>
 
     <style name="progressBar">
         <item name="colorPrimary">@color/lightBlue</item>
         <item name="android:indeterminateTint">@color/lightBlue</item>
         <item name="colorPrimaryContainer">@color/gray_misty</item>
+    </style>
+
+    <style name="missionStyle">
+        <item name="android:background">@color/white</item>
     </style>
 
 

@@ -8,8 +8,9 @@ import java.util.concurrent.TimeUnit
 
 class ApiConfig {
     companion object {
-        private const val BASE_URL = "http://:3000/api/v1/"
-
+        private const val BASE_URL = "http://192.168.0.100:3000/api/v1/"
+        //34.128.80.179
+        //192.168.0.100
         private fun createApiService(): ApiService {
             val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             val client = OkHttpClient.Builder()

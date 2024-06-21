@@ -3,17 +3,21 @@ package com.dicoding.abai.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.dicoding.abai.Event
+import com.dicoding.abai.database.UserHistory
+import com.dicoding.abai.database.UserRepository
+import com.dicoding.abai.helper.UserModel
 import com.dicoding.abai.response.DataItemStory
-import com.dicoding.abai.response.DummyResponseAPI
-import com.dicoding.abai.response.ItemsItem
 import com.dicoding.abai.response.StoryDetailsResponse
 import com.dicoding.abai.retrofit.ApiConfig
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ReadingViewModel: ViewModel() {
+class ReadingViewModel (private val repository: UserRepository) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -24,31 +28,44 @@ class ReadingViewModel: ViewModel() {
     private val _errorMessage = MutableLiveData<Event<String>>()
     val errorMessage: LiveData<Event<String>> = _errorMessage
 
+    private val _userId = MutableLiveData<Int>()
+    val userId: LiveData<Int> = _userId
 
-//    init {
-//        storyDataReading()
-//    }
+    private val _userHistory = MutableLiveData<List<UserHistory>>()
+    val userHistory: LiveData<List<UserHistory>> = _userHistory
 
-//    private fun userViewer() {
-//        _isLoading.value = true
-//        val client = ApiConfig.getApiServiceForUser().getUser("H")
-//        client.enqueue(object : Callback<DummyResponseAPI> {
-//            override fun onResponse(call: Call<DummyResponseAPI>, response: Response<DummyResponseAPI>) {
-//                _isLoading.value = false
-//                if (response.isSuccessful) {
-//                    _user.value = response.body()?.items
-//
-//                } else {
-//                    _errorMessage.value = Event("Failed to fetch users: ${response.message()}")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<DummyResponseAPI>, t: Throwable) {
-//                _isLoading.value = false
-//                _errorMessage.value = Event("Error: ${t.message}")
-//            }
-//        })
-//    }
+
+    fun getSession(): LiveData<UserModel> {
+        return repository.getSession().asLiveData()
+    }
+
+    fun getUserIdByUsername(username: String) {
+        viewModelScope.launch {
+            val userId = repository.getUserIdByUsername(username)
+            _userId.postValue(userId!!)
+        }
+    }
+
+    fun getUserHistoryByUserId(userId: Int) {
+        viewModelScope.launch {
+            val userHistory = repository.getUserHistoryByUserId(userId)
+            _userHistory.postValue(userHistory)
+        }
+    }
+
+    fun insertUserHistory(userId: Int, storyId: Int) {
+        val newUserHistory = UserHistory(userId = userId, storyId = storyId)
+        viewModelScope.launch {
+            repository.insertUserHistory(newUserHistory)
+        }
+    }
+
+    fun incrementStoryCount(userId: Int) {
+        viewModelScope.launch {
+            repository.incrementStoryCount(userId)
+        }
+    }
+
 
     fun storyDataReading( storyId : Int, userId : Int) {
         _isLoading.value = true

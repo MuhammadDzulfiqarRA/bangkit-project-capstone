@@ -1,6 +1,8 @@
 package com.dicoding.abai.adapter
 
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -42,8 +44,9 @@ class StoryAdapter : ListAdapter<DataItem, StoryAdapter.MyViewHolder>(DIFF_CALLB
             binding.apply {
                 tvItemTitleName.text = bindItem.title
                 tvItemDescription.text = bindItem.overview
+                Log.d(TAG, "STORY THUMBNAIL: ${bindItem.thumbnail} ")
                 Glide.with(itemView)
-                    .load("http://192.168.0.100:3000/api/v1/thumbnails/display/${bindItem.thumbnail}")
+                    .load(bindItem.thumbnail)
                     .placeholder(R.drawable.ic_baseline_broken_image_24)
                     .error(R.drawable.ic_baseline_broken_image_24)
                     .into(imgCoverStory)

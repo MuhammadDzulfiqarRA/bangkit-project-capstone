@@ -18,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import com.dicoding.abai.R
 import com.dicoding.abai.databinding.ActivityLoginBinding
 import com.dicoding.abai.viewmodel.LoginViewModel
+import com.dicoding.abai.viewmodel.ViewModelFactory
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -35,8 +36,11 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
 
-//    private lateinit var auth: FirebaseAuth
-    private val loginViewModel: LoginViewModel by viewModels()
+    private lateinit var auth: FirebaseAuth
+
+    private val loginViewModel by viewModels<LoginViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
 
     companion object {
         private const val RC_SIGN_IN = 9001
@@ -47,35 +51,17 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-        //binding
-        binding.btnLogin.setOnClickListener {
-            if (binding.edLoginUsername.text != null && binding.edLoginPassword.text != null) {
-                startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
-            } else{
-                Toast.makeText(
-                    this@LoginActivity,
-                    getString(R.string.form_login_error),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-        }
-
-        binding.tvRegister.setOnClickListener {
-            startActivity(Intent(this@LoginActivity,RegisterActivity::class.java))
-        }
+        
 
 //
-//        auth = FirebaseAuth.getInstance()
-//        val currentUser = auth.currentUser
-//        if (currentUser != null) {
-//            // The user is already signed in, navigate to MainActivity
-//            val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
-//            startActivity(intent)
-//            finish() // finish the current activity to prevent the user from coming back to the SignInActivity using the back button
-//        }
+        auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            // The user is already signed in, navigate to MainActivity
+            val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
+            startActivity(intent)
+            finish() // finish the current activity to prevent the user from coming back to the SignInActivity using the back button
+        }
 
         binding.btnGoogle.setOnClickListener {
             signIn()
@@ -91,8 +77,13 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel.isLoginError.observe(this, Observer { exception ->
             if (exception != null) {
-                Log.d(TAG, exception.message.toString())
-                Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
+                if (loginViewModel.getErrorCode() != "404") {
+                    Log.d(TAG, "LOGIN ERROR = ${loginViewModel.getErrorCode()}")
+                    Log.d(TAG, exception.message.toString())
+                    Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.d(TAG, "LOGIN ERROR = ${loginViewModel.getErrorCode()}")
+                }
             }
         })
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dicoding.abai.adapter.StoryAdapter
@@ -14,12 +15,14 @@ import com.dicoding.abai.databinding.FragmentDisplayDashboardBinding
 import com.dicoding.abai.response.DataItem
 import com.dicoding.abai.response.ItemsItem
 import com.dicoding.abai.viewmodel.DashboardViewModel
+import com.dicoding.abai.viewmodel.ViewModelFactory
 
 
 class DisplayDashboardFragment : Fragment() {
 
     private lateinit var binding: FragmentDisplayDashboardBinding
-    private val dashboardViewModel: DashboardViewModel by activityViewModels()
+    private lateinit var dashboardViewModel: DashboardViewModel
+
     private val adapter: StoryAdapter by lazy { StoryAdapter() }
 
     private var position: Int = 0
@@ -39,6 +42,9 @@ class DisplayDashboardFragment : Fragment() {
 
         val layoutManager = GridLayoutManager(requireActivity(), 2)
         binding.rvFragmentDisplay.layoutManager = layoutManager
+
+        dashboardViewModel = ViewModelProvider(this, ViewModelFactory.getInstance(requireContext())).get(DashboardViewModel::class.java)
+
 
         // Set adapter here
         binding.rvFragmentDisplay.adapter = adapter
