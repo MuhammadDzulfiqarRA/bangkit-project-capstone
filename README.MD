@@ -14,8 +14,9 @@ ABA-I is an innovative mobile application dedicated to revitalizing interest in 
 
 #### Other Repositories
 
-<p>[ML]<a>https://github.com/JC0ffee/mychatbot</a></p>
-<p>[CC]<a>https://github.com/)
+#### ML - [Machine Learning Chatbot Repository]<a>https://github.com/JC0ffee/mychatbot</a>
+#### ML - [Machine Learning Recommendation Repository]<a>https://github.com/Mus-lihah/rekommendation.git</a>
+#### CC - [Cloud Computing Github Repository]<a>https://github.com/ammarkhocan/story-backend</a>
 
 # Our Features
 
